@@ -23,18 +23,29 @@ const App = () => {
     getMovies();
   }, []);
 
-  const addToSavedList = id => {
+  const addToSavedList = movie => {//Not exactly sure how this works 
+    if (saved === []){
+     let removeDupes= new Set([...saved,movie])
+     removeDupes.add(movie);
+     let undupedArray = Array.from(removeDupes)
+     setSaved(undupedArray)
+    }
+    else {
+      let removeDupes= new Set([...saved,movie])
+     removeDupes.add(movie);
+     let undupedArray = Array.from(removeDupes)
+     setSaved(undupedArray)
+    }
     // This is stretch. Prevent the same movie from being "saved" more than once
+    console.log(movie)
   };
-  console.log(movieList)
   return (
     <div>
-      {/* <Link to='/'>Home</Link> */}
-      
-      <SavedList list={[ /* This is stretch */]} />
+      <SavedList list={saved} />
+
       <Switch>
-      <Route path='/movies/:id'>
-          <Movie/>
+        <Route path='/movies/:id'>
+          <Movie  addToSavedList={(movie)=>addToSavedList(movie)}/>
         </Route>
 
         <Route path='/'>
